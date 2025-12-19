@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('kepala_sekolah', function (Blueprint $table) {
+            $table->id('id_kepala_sekolah');
+            $table->foreignId('id_user')->nullable()->constrained('users', 'id_user')->onDelete('set null');
+            $table->string('nama');
+            $table->integer('nip_nuptk')->unique();
+            $table->string('foto')->nullable();
+            $table->date('tanggal_lahir');
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
+            $table->text('sambutan')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('kepala_sekolah');
+    }
+};
